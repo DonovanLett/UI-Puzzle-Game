@@ -25,9 +25,6 @@ public class RadioPuzzleManager : MonoBehaviour
     public AudioSource staticSource;
     public AudioLowPassFilter voiceLPF;
     public AudioHighPassFilter staticHPF;
-    /*
-    public Slider slider;
-    */
 
 
     [SerializeField]
@@ -62,23 +59,6 @@ public class RadioPuzzleManager : MonoBehaviour
     {
         CombineSliderValues();
         ConvertSliderValuesToSound();
-
-        /*
-        float t = Mathf.SmoothStep(0f, 1f, slider.value); // "
-
-        // Crossfade
-        voiceSource.volume = t;
-        staticSource.volume = 1f - t;
-
-        // Voice clarity improves
-        voiceLPF.cutoffFrequency = Mathf.Lerp(500f, 22000f, t);
-
-        // Static gets filtered out
-        staticHPF.cutoffFrequency = Mathf.Lerp(10f, 2000f, t);
-
-        // Optional realism
-        voiceSource.pitch = Mathf.Lerp(0.97f, 1f, t);
-        */
     }
 
     public void CombineSliderValues()

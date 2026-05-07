@@ -26,12 +26,6 @@ public class SequencesDropDown : MonoBehaviour
         Shuffle(_currentCovers);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void OnPuzzleSolved()
     {
         for(int i = 0; i <= _sequencesRevealedPerPuzzleSolved - 1; i++)

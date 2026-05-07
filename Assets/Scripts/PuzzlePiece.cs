@@ -32,11 +32,6 @@ public class PuzzlePiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
     [SerializeField]
     private bool _canRotate;
 
-    /*
-    [SerializeField]
-    private Transform _holderSheet;
-    */
-
     [SerializeField]
     private RectTransform _holderSheet, _challengeSpace;
 
@@ -45,7 +40,6 @@ public class PuzzlePiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
     {
         _image = GetComponent<Image>();
         _rectTransform = GetComponent<RectTransform>();
-        //_holderSheet = transform.parent; // Make sure this is right!!!!!!
         _holderSheet = transform.parent.GetComponent<RectTransform>(); ;
     }
 
@@ -54,10 +48,6 @@ public class PuzzlePiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
     {
         if (Input.GetKeyDown(KeyCode.Space) && _canRotate == true)
         {
-            // _image.rectTransform.localRotation = Quaternion.identity; // Fix this!!!!!!!!!!!!
-            // _image.rectTransform.Rotate(0, 0, 90); // Make sure this is right!!!!!
-            //transform.rotation = Quaternion.Euler(0f, 0f, 90f); // Correct This
-            //_image.GetComponent<RectTransform>().Rotate(0f, 0f, -90.0f);
             _rectTransform.Rotate(0f, 0f, -90.0f);
             CheckPuzzlePiece();
         } 
@@ -65,8 +55,6 @@ public class PuzzlePiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-       // _image.raycastTarget = false;
-
         if(_currentSlot != null)
         {
             _currentSlot.OnPuzzlePieceRemoved();
@@ -80,31 +68,18 @@ public class PuzzlePiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
         else if (transform.parent == _holderSheet.transform)
         {
             transform.SetParent(_challengeSpace.GetComponent<RectTransform>(), true);
-            // transform.SetParent(_holderSheet.GetComponent<RectTransform>(), false);
-            // transform.SetParent(null); // Change this so that it still exists inside the Canvas
-
-            // transform.parent = null;
         }
 
         Vector3 pos = _rectTransform.localPosition;
         pos.z = 5f;
         _rectTransform.localPosition = pos;
-
-        /*
-        else if (transform.parent == _holderSheet.transform)
-        {
-            transform.SetParent(null); // Switch toe rectTransform
-            //transform.parent = null;
-        }
-        */
     }
 
     public void OnDrag(PointerEventData eventData)
     {
         _rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
         _rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
-        //_rectTransform.pivot = new Vector2(0.5f, 0.5f);
-        //RectTransform Pivot = (0.5, 0.5);
+        
         Vector2 localPoint;
 
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
@@ -115,63 +90,13 @@ public class PuzzlePiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
         );
 
         _rectTransform.anchoredPosition = localPoint;
-
-        /*
-        Vector2 localPoint;
-
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            _rectTransform.parent as RectTransform,
-            eventData.position,
-            eventData.pressEventCamera,
-            out localPoint
-        );
-        _rectTransform.anchoredPosition = localPoint;
-        */
-        //transform.position = eventData.position;
-
-        // _rectTransform.anchoredPosition = new Vector3(eventData.position.x, eventData.position.y, 0.0f);
     }
 
 
     public void OnEndDrag(PointerEventData eventData)
     {
-       // _image.raycastTarget = false;
         SearchForSlot(eventData);
     }
-
-    /*
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        _image.raycastTarget = false;
-
-        if (_currentSlot == null)
-        {
-            ResetPosition();
-        }
-        //CheckWhereToSnapTo();
-    }
-
-    /*
-    public void CheckWhereToSnapTo()
-    {
-        if(_currentSlot != null)
-        {
-            _image.rectTransform.localPosition = _currentSlot.transform.position;
-        }
-        else
-        {
-            ResetPosition();
-            // Snap back to the Sprite Sheet
-        }
-    }
-    */
-    /*
-
-    public void ResetPosition()
-    {
-        _image.rectTransform.localPosition = _defaultPosition;
-    }
-    */
 
     public void ResetPosition()
     {
@@ -179,9 +104,6 @@ public class PuzzlePiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
         Vector3 pos = _rectTransform.localPosition;
         pos.z = 5f;
         _rectTransform.localPosition = pos;
-        // _image.rectTransform.SetParent(_holderSheet.transform, false);
-        // transform.parent = _holderSheet.transform; // Make sure this is right!!!!!!
-        // Set its Parent to be the Layer Component on the Right
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -196,8 +118,6 @@ public class PuzzlePiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
 
     public void SearchForSlot(PointerEventData eventData)
     {
-       // _image.raycastTarget = false;
-
         List<RaycastResult> results = new List<RaycastResult>();
 
         List<PuzzleSlot> slots = new List<PuzzleSlot>();
@@ -240,26 +160,7 @@ public class PuzzlePiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
     public void SetCurrentSlot(PuzzleSlot slot)
     {
         _currentSlot = slot;
-        // transform.SetParent(_currentSlot.GetComponent<RectTransform>(), false);
         _image.rectTransform.position = _currentSlot.GetComponent<RectTransform>().position; // Maybe delete this in a second
-
-        /*
-        //_image.rectTransform.sizeDelta = _currentSlot.GetComponent<RectTransform>().sizeDelta;
-        if (_image.rectTransform != null && _currentSlot.GetComponent<RectTransform>() != null)
-        {
-            _image.rectTransform.SetSizeWithCurrentAnchors(
-                RectTransform.Axis.Horizontal,
-                _currentSlot.GetComponent<RectTransform>().rect.width
-            );
-
-            _image.rectTransform.SetSizeWithCurrentAnchors(
-                RectTransform.Axis.Vertical,
-                _currentSlot.GetComponent<RectTransform>().rect.height
-            );
-        }
-        */
-
-
         _currentSlot.OnPuzzlePieceAdded();
         CheckPuzzlePiece();
     }
@@ -269,29 +170,10 @@ public class PuzzlePiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
         if (_currentSlot != null && _currentSlot == _requiredSlot && Quaternion.Angle(_image.rectTransform.localRotation, Quaternion.identity) < 0.01f) ///// _image.rectTransform.localRotation == Quaternion.Euler(0f, 0f, 0f)
         {
             _isCorrect = true;
-            /*
-            Debug.Log(name + " is in correct spot.");
-            Debug.Log("Rotation is On. " + _image.rectTransform.localRotation);
-            */
         }
         else
         {
             _isCorrect = false;
-            /*
-            Debug.Log(name + " is in incorrect spot.");
-            if(_currentSlot == null)
-            {
-                Debug.Log("Slot is Null");
-            }
-            else if(_currentSlot != _requiredSlot)
-            {
-                Debug.Log("Slot is Incorrect");
-            }
-            else if(_image.rectTransform.localRotation != Quaternion.Euler(0f, 0f, 0f))
-            {
-                Debug.Log("Rotation is Off. " + _image.rectTransform.localRotation);
-            }
-            */
         }
     }
 }

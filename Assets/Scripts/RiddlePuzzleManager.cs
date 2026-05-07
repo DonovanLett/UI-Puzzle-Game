@@ -67,12 +67,6 @@ public class RiddlePuzzleManager : MonoBehaviour
         // Make sure all Switches are initially off
         SetToggles();
         SetRiddles();
-        
-        /*
-        _currentOptions.Clear();
-        _currentOptions.AddRange(_options);
-        */
-
         _currentRiddle = 0;
         _riddleText.text = _usedRiddles[_currentRiddle].riddle;
         SetOptions();
@@ -84,11 +78,6 @@ public class RiddlePuzzleManager : MonoBehaviour
         _riddleText.text = _usedRiddles[_currentRiddle].riddle;
 
         SetToggles();
-        /*
-        _toggleGroup.allowSwitchOff = true;
-        _selectedToggle.isOn = false;
-        _selectedToggle = null;
-        */
         SetOptions();
     }
 
@@ -214,34 +203,6 @@ public class RiddlePuzzleManager : MonoBehaviour
             (list[i], list[randomIndex]) = (list[randomIndex], list[i]);
         }
     }
-
-    /*
-    public void SetOptions() //
-    {
-
-        // Shuffle string[] _answers
-        for (int i = 0; i < _answers.Count; i++)
-        {
-            int randomIndex = Random.Range(i, _answers.Count);
-            string temp = _answers[i];
-            _answers[i] = _answers[randomIndex];
-            _answers[randomIndex] = temp;
-        }
-
-        // Have one of the Options at random set to the correct answer in _answers[]
-
-        // Finally, do a for loop that does the following for each Riddle Option _options: if _options[i] doesn't already have an answer assigned to it, assign answer[i] to it. (
-        for (int i = 0; i < _options.Length; i++) // There's something wrong with this
-        {
-            //if (i != correctToggleIndex && i != correctAnswerIndex)
-           // {
-                _options[i].SetAnswer(_answers[i]);
-                Debug.Log(_options[i].name + " set to " + _answers[i]);
-           // }
-        }
-    }
-    */
-
 
     private void SetToggles()
     {

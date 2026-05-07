@@ -18,18 +18,6 @@ public class PuzzleSlot : MonoBehaviour
         _thisImage = GetComponent<Image>();
     }
 
-
-    public void OnDrop(PointerEventData eventData)
-    {
-        /*
-        if (eventData.pointerDrag.GetComponent<PuzzlePiece>() != null && isOccupied == false)
-        {
-            eventData.pointerDrag.GetComponent<PuzzlePiece>().SetCurrentSlot(this);
-            isOccupied = true;
-        }
-        */
-    }
-
     public void OnPuzzlePieceAdded()
     {
         isOccupied = true;
