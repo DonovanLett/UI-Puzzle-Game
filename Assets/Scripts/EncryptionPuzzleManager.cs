@@ -68,10 +68,9 @@ public class EncryptionPuzzleManager : MonoBehaviour
         if (_decryptedTextBox.text == _decryptedAnswer)
         {
             Debug.Log("Correct");
-            _decryptedTextBox.readOnly = true; /// Turn Off
-            _enterButton.interactable = false; // Turn Off
-            // _threeSequences.SetActive(true);
-            _radioValueDisplay.SetActive(true); // NEW
+            _decryptedTextBox.readOnly = true; 
+            _enterButton.interactable = false;
+            _radioValueDisplay.SetActive(true);
         }
         else
         {

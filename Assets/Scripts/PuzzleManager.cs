@@ -61,6 +61,7 @@ public class PuzzleManager : MonoBehaviour
 
         Debug.Log("Completed");
          _radioValueDisplay.SetActive(true); // NEW
+        _radioValueDisplay.transform.SetAsLastSibling();
 
         // Stop Code
         foreach(var piece in _piece)
