@@ -33741,7 +33741,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1437330753
 RectTransform:
   m_ObjectHideFlags: 0
@@ -43249,6 +43249,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pinPad: {fileID: 1951283890}
+  _pinPadSpace: {fileID: 1951283889}
   _requiredPin: 
   _pinBeingAdded: 0
   _radioPuzzleManager: {fileID: 1885530945}
@@ -45332,7 +45333,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1886709274
 RectTransform:
   m_ObjectHideFlags: 0
@@ -47403,6 +47404,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sliderName: {fileID: 519194478}
   _sliderValue: {fileID: 1220473144}
+--- !u!224 &1951283889 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8675102733374253877, guid: 1edfdfbd76cdbc5408c99131e578ea1c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1553658889151771333}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1951283890 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5336657137116857427, guid: 1edfdfbd76cdbc5408c99131e578ea1c,

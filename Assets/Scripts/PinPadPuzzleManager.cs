@@ -12,6 +12,9 @@ public class PinPadPuzzleManager : MonoBehaviour
     private TMP_Text _pinPad;
 
     [SerializeField]
+    private RectTransform _pinPadSpace;
+
+    [SerializeField]
     private string _requiredPin;
 
     [SerializeField]
@@ -36,8 +39,33 @@ public class PinPadPuzzleManager : MonoBehaviour
             _pinPad.text = "";
             _pinBeingAdded = true;
         }
+        string proposedText = _pinPad.text + number;
+
+        // Calculate preferred size of the new text
+        Vector2 preferredSize = _pinPad.GetPreferredValues(proposedText);
+
+        float maxWidth = _pinPadSpace.rect.width;
+        float maxHeight = _pinPadSpace.rect.height;
+
+        // Only apply if it fits inside the RectTransform
+        if (preferredSize.x <= maxWidth &&
+            preferredSize.y <= maxHeight)
+        {
+            _pinPad.text = proposedText;
+        }
+    }
+
+    /*
+    public void AddPinNumber(int number)
+    {
+        if (!_pinBeingAdded)
+        {
+            _pinPad.text = "";
+            _pinBeingAdded = true;
+        }
         _pinPad.text += number.ToString();
     }
+    */
 
     public void EnterPin()
     {
