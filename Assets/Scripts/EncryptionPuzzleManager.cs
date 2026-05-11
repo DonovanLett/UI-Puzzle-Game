@@ -77,5 +77,4 @@ public class EncryptionPuzzleManager : MonoBehaviour
             Debug.Log("Incorrect");
         }
     }
-
 }

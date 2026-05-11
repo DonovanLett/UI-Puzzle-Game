@@ -57,6 +57,7 @@ public class RiddlePuzzleManager : MonoBehaviour
 
     public void OnStartRound()
     {
+        _possibleRiddles = _riddleText.GetComponentsInChildren<Riddle>(); // Filler
         _answers.Clear();
         _answers.AddRange(_fillerAnswers);
         // Add _possibleRiddles.answers to string[] answers
