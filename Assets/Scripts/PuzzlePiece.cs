@@ -21,9 +21,6 @@ public class PuzzlePiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
     private PuzzleSlot _currentSlot;
 
     [SerializeField]
-    private int _slotNumber;
-
-    [SerializeField]
     private PuzzleSlot _requiredSlot;
 
     [SerializeField]
