@@ -16,7 +16,7 @@ public class RadioPuzzleManager : MonoBehaviour
 
     
     [SerializeField]
-    private float _overallStaticIntensity; // Change this variable to say the opposite of what it says right now; the higher it is, the lower the sound of static
+    private float _overallMessageClarity; // Change this variable to say the opposite of what it says right now; the higher it is, the lower the sound of static
 
     [SerializeField]
     private float _overlappingStaticIntensity; // If you want this to have no affect, make sure it is set to 1, not 0
@@ -79,12 +79,12 @@ public class RadioPuzzleManager : MonoBehaviour
             }
             overall += intensity;
         }
-        _overallStaticIntensity = overall / (_slider.Length * _overlappingStaticIntensity); // If you want there to be no overlapping static, and for the final message to have no static at all, get rid of multiplying _slider.Length by _overlappingStaticIntensity; have it just be _slider.Length
+        _overallMessageClarity = overall / (_slider.Length * _overlappingStaticIntensity); // If you want there to be no overlapping static, and for the final message to have no static at all, get rid of multiplying _slider.Length by _overlappingStaticIntensity; have it just be _slider.Length
     }
 
     public void ConvertSliderValuesToSound()
     {
-        float t = Mathf.SmoothStep(0f, 1f, _overallStaticIntensity); // "
+        float t = Mathf.SmoothStep(0f, 1f, _overallMessageClarity); // "
 
         // Crossfade
         voiceSource.volume = t;

@@ -40467,11 +40467,6 @@ PrefabInstance:
       objectReference: {fileID: 1627531986}
     - target: {fileID: 1887495518008784432, guid: a3f1b856446618e44abb4f399e0d3cce,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SwitchToArea
-      objectReference: {fileID: 0}
-    - target: {fileID: 1887495518008784432, guid: a3f1b856446618e44abb4f399e0d3cce,
-        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
       objectReference: {fileID: 1437330752}
@@ -40508,12 +40503,12 @@ PrefabInstance:
     - target: {fileID: 5378021602172277911, guid: a3f1b856446618e44abb4f399e0d3cce,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 200
+      value: 146.304
       objectReference: {fileID: 0}
     - target: {fileID: 5378021602172277911, guid: a3f1b856446618e44abb4f399e0d3cce,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 50
+      value: 31.712
       objectReference: {fileID: 0}
     - target: {fileID: 5378021602172277911, guid: a3f1b856446618e44abb4f399e0d3cce,
         type: 3}
@@ -40553,12 +40548,12 @@ PrefabInstance:
     - target: {fileID: 5378021602172277911, guid: a3f1b856446618e44abb4f399e0d3cce,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -354
+      value: -380.847
       objectReference: {fileID: 0}
     - target: {fileID: 5378021602172277911, guid: a3f1b856446618e44abb4f399e0d3cce,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 230
+      value: 239.14397
       objectReference: {fileID: 0}
     - target: {fileID: 5378021602172277911, guid: a3f1b856446618e44abb4f399e0d3cce,
         type: 3}
@@ -45284,7 +45279,7 @@ MonoBehaviour:
   - {fileID: 1821431966}
   - {fileID: 2142434115}
   - {fileID: 961103896}
-  _overallStaticIntensity: 0
+  _overallMessageClarity: 0
   _overlappingStaticIntensity: 4
   voiceSource: {fileID: 916696033}
   staticSource: {fileID: 1330733484}
