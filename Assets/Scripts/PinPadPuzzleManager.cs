@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Playables;
 using UnityEngine.UI;
 using UnityEngine.Windows;
 
@@ -18,10 +19,13 @@ public class PinPadPuzzleManager : MonoBehaviour
     private string _requiredPin;
 
     [SerializeField]
-    private bool _pinBeingAdded;
+    private bool _pinBeingAdded, _incorrectSignFlashing;
 
     [SerializeField]
     private RadioPuzzleManager _radioPuzzleManager;
+
+    [SerializeField]
+    private PlayableDirector _endingTimeline, _incorrectTimeline;
 
     // Start is called before the first frame update
     void Start()
@@ -34,24 +38,27 @@ public class PinPadPuzzleManager : MonoBehaviour
 
     public void AddPinNumber(int number)
     {
-        if (!_pinBeingAdded)
+        if (_incorrectSignFlashing == false)
         {
-            _pinPad.text = "";
-            _pinBeingAdded = true;
-        }
-        string proposedText = _pinPad.text + number;
+            if (!_pinBeingAdded)
+            {
+                _pinPad.text = "";
+                _pinBeingAdded = true;
+            }
+            string proposedText = _pinPad.text + number;
 
-        // Calculate preferred size of the new text
-        Vector2 preferredSize = _pinPad.GetPreferredValues(proposedText);
+            // Calculate preferred size of the new text
+            Vector2 preferredSize = _pinPad.GetPreferredValues(proposedText);
 
-        float maxWidth = _pinPadSpace.rect.width;
-        float maxHeight = _pinPadSpace.rect.height;
+            float maxWidth = _pinPadSpace.rect.width;
+            float maxHeight = _pinPadSpace.rect.height;
 
-        // Only apply if it fits inside the RectTransform
-        if (preferredSize.x <= maxWidth &&
-            preferredSize.y <= maxHeight)
-        {
-            _pinPad.text = proposedText;
+            // Only apply if it fits inside the RectTransform
+            if (preferredSize.x <= maxWidth &&
+                preferredSize.y <= maxHeight)
+            {
+                _pinPad.text = proposedText;
+            }
         }
     }
 
@@ -73,11 +80,14 @@ public class PinPadPuzzleManager : MonoBehaviour
         {
             if (_pinPad.text == _requiredPin.ToString())
             {
+                _endingTimeline.Play();
                 _pinPad.text = "PIN Accepted";
                 EventSystem.current.enabled = false; // Disables the Players ability to interact with UI
             }
             else
             {
+                _incorrectSignFlashing = true;
+                _incorrectTimeline.Play();
                 _pinPad.text = "Invalid PIN";
             }
             _pinBeingAdded = false;
@@ -120,5 +130,10 @@ public class PinPadPuzzleManager : MonoBehaviour
             }
             Debug.Log(ch);
         }
+    }
+
+    public void IncorrectSignFinished()
+    {
+        _incorrectSignFlashing = false;
     }
 }
