@@ -24,6 +24,10 @@ public class PinPadPuzzleManager : MonoBehaviour
     [SerializeField]
     private RadioPuzzleManager _radioPuzzleManager;
 
+    [Header("Hello")]
+    [SerializeField]
+    private AudioSource _beep;
+
     [SerializeField]
     private PlayableDirector _endingTimeline, _incorrectTimeline;
 
@@ -31,13 +35,14 @@ public class PinPadPuzzleManager : MonoBehaviour
     void Start()
     {
         RandomizePin();
-
+        _beep = GetComponent<AudioSource>();
         _pinPad.text = "Enter PIN";
         _pinBeingAdded = false;
     }
 
     public void AddPinNumber(int number)
     {
+        EventSystem.current.SetSelectedGameObject(null);
         if (_incorrectSignFlashing == false)
         {
             if (!_pinBeingAdded)
@@ -59,6 +64,7 @@ public class PinPadPuzzleManager : MonoBehaviour
             {
                 _pinPad.text = proposedText;
             }
+            _beep.PlayOneShot(_beep.clip);
         }
     }
 
@@ -76,7 +82,9 @@ public class PinPadPuzzleManager : MonoBehaviour
 
     public void EnterPin()
     {
-        if (_pinBeingAdded)
+        EventSystem.current.SetSelectedGameObject(null);
+        //_beep.PlayOneShot(_beep.clip);
+        if (_pinBeingAdded && _incorrectSignFlashing == false)
         {
             if (_pinPad.text == _requiredPin.ToString())
             {
@@ -87,15 +95,22 @@ public class PinPadPuzzleManager : MonoBehaviour
             else
             {
                 _incorrectSignFlashing = true;
+                _incorrectTimeline.Stop();
                 _incorrectTimeline.Play();
                 _pinPad.text = "Invalid PIN";
             }
             _pinBeingAdded = false;
         }
+        else
+        {
+            _beep.PlayOneShot(_beep.clip);
+        }
     }
 
     public void ClearPin()
     {
+        EventSystem.current.SetSelectedGameObject(null);
+        _beep.PlayOneShot(_beep.clip);
         if (_pinBeingAdded)
         {
             _pinPad.text = "Enter PIN";

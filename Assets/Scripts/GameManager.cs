@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
         if (Input.anyKeyDown && _isOnOpeningText)
         {
             _isOnOpeningText = false;
+            _narrationCutscene.Stop();
             _openingCutscene.Play();
         }
     }
