@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.Windows;
 
@@ -65,6 +66,7 @@ public class EncryptionPuzzleManager : MonoBehaviour
 
     public void OnEnterButtonPressed()
     {
+        EventSystem.current.SetSelectedGameObject(null);
         if (_decryptedTextBox.text == _decryptedAnswer)
         {
             Debug.Log("Correct");

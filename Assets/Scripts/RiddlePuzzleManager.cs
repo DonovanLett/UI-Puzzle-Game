@@ -5,6 +5,7 @@ using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class RiddlePuzzleManager : MonoBehaviour
@@ -94,7 +95,8 @@ public class RiddlePuzzleManager : MonoBehaviour
 
     public void OnEnterButtonPressed()
     {
-        if(_selectedToggle != null)
+        EventSystem.current.SetSelectedGameObject(null);
+        if (_selectedToggle != null)
         {
             if(_selectedToggle.GetComponent<RiddleOption>().answer == _usedRiddles[_currentRiddle].answer)
             {

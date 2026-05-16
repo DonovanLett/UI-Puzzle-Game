@@ -50,7 +50,8 @@ public class PuzzleManager : MonoBehaviour
 
     public void OnEnterButtonPressed()
     {
-        foreach(var piece in _piece)
+        EventSystem.current.SetSelectedGameObject(null);
+        foreach (var piece in _piece)
         {
             if(piece._isCorrect == false)
             {
