@@ -17935,6 +17935,7 @@ GameObject:
   - component: {fileID: 655925769}
   - component: {fileID: 655925768}
   - component: {fileID: 655925767}
+  - component: {fileID: 655925770}
   m_Layer: 5
   m_Name: Settings_Panel
   m_TagString: Untagged
@@ -18016,6 +18017,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 655925765}
   m_CullTransparentMesh: 1
+--- !u!114 &655925770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 655925765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 915623a0aafb3f9459b9dc97778009f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &656558202
 GameObject:
   m_ObjectHideFlags: 0
@@ -18602,6 +18615,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 673012534}
   m_CullTransparentMesh: 1
+--- !u!1 &675328953
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 675328954}
+  - component: {fileID: 675328955}
+  m_Layer: 0
+  m_Name: Settings_Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &675328954
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 675328953}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1149738411}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &675328955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 675328953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ef3d08f76226b84580430036e4c1805, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &676359823
 GameObject:
   m_ObjectHideFlags: 0
@@ -19673,6 +19730,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 1700396885}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 655925770}
+        m_TargetAssemblyTypeName: UISaveScript, Assembly-CSharp
+        m_MethodName: LoadState
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -30788,6 +30857,7 @@ Transform:
   - {fileID: 1885530946}
   - {fileID: 1837801660}
   - {fileID: 1149480714}
+  - {fileID: 675328954}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1155819050
@@ -39146,7 +39216,7 @@ MonoBehaviour:
 
 
 
-    
+
 
     Thank you.
 
@@ -44394,6 +44464,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 1700396885}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 655925770}
+        m_TargetAssemblyTypeName: UISaveScript, Assembly-CSharp
+        m_MethodName: SaveState
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -54718,20 +54800,20 @@ MonoBehaviour:
       m_Calls: []
   m_text: '<u>OTHER CREDITS</u>
 
-    
+
 
     Painting featured in Puzzle #1 was created
     by Leonardo da Vinci.
 
-    
 
-    Riddles for Puzzle #3 were taken from all
-    over the internet.
 
-    
+    Riddles for Puzzle #3 were taken from all over the
+    internet.
 
-    The concept of deciphering a message through radio
-    waves was taken from the TV Show "Pluribus" by Vince Gilligan.
+
+
+    The concept of deciphering a message through radio waves was
+    taken from the TV Show "Pluribus" by Vince Gilligan.
 
 '
   m_isRightToLeft: 0
