@@ -47,7 +47,7 @@ public class PuzzlePiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
         {
             _rectTransform.Rotate(0f, 0f, -90.0f);
             CheckPuzzlePiece();
-        } 
+        }
     }
 
     public void OnBeginDrag(PointerEventData eventData)

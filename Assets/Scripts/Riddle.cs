@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class Riddle : MonoBehaviour
 {
-    [SerializeField]
+    [TextArea]
     public string riddle, answer;
 }

@@ -63,6 +63,11 @@ public class UISaveScript : MonoBehaviour
     // Save UI State
     // -----------------------------
 
+    private void Start()
+    {
+        SaveState();
+    }
+
     [ContextMenu("Save UI State")]
     public void SaveState()
     {

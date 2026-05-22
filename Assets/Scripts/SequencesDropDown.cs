@@ -7,17 +7,19 @@ public class SequencesDropDown : MonoBehaviour
 {
     [SerializeField]
     private Button _dropDownButton;
+
     [SerializeField]
     private GameObject _dropDown;
 
-
     [SerializeField]
     private GameObject[] _covers;
+
     [SerializeField]
     private List<GameObject> _currentCovers;
 
     [SerializeField]
     private int _sequencesRevealedPerPuzzleSolved;
+
     // Start is called before the first frame update
     void Start()
     {

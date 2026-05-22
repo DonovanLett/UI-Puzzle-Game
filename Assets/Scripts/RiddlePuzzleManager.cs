@@ -6,6 +6,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Playables;
 using UnityEngine.UI;
 
 public class RiddlePuzzleManager : MonoBehaviour
@@ -33,7 +34,6 @@ public class RiddlePuzzleManager : MonoBehaviour
     [SerializeField]
     private List<string> _answers;
 
-
     [SerializeField]
     private Button _enterButton;
 
@@ -48,6 +48,21 @@ public class RiddlePuzzleManager : MonoBehaviour
 
     [SerializeField]
     private GameObject _radioValueDisplay; /// NEW
+
+    [SerializeField]
+    private ValueDropDown _radioValueDropDown;
+
+    [SerializeField]
+    private PlayableDirector _completeTimeline;
+
+    [SerializeField]
+    private ProgressNode[] _progressNodes;
+
+    [SerializeField]
+    private ProgressLine[] _progressLines;
+
+    [SerializeField]
+    private Timer _timer;
 
 
     // Start is called before the first frame update
@@ -70,6 +85,7 @@ public class RiddlePuzzleManager : MonoBehaviour
         SetToggles();
         SetRiddles();
         _currentRiddle = 0;
+        SetNodes();
         _riddleText.text = _usedRiddles[_currentRiddle].riddle;
         SetOptions();
     }
@@ -79,6 +95,7 @@ public class RiddlePuzzleManager : MonoBehaviour
         _currentRiddle++;
         _riddleText.text = _usedRiddles[_currentRiddle].riddle;
 
+        SetNodes();
         SetToggles();
         SetOptions();
     }
@@ -98,9 +115,8 @@ public class RiddlePuzzleManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(null);
         if (_selectedToggle != null)
         {
-            if(_selectedToggle.GetComponent<RiddleOption>().answer == _usedRiddles[_currentRiddle].answer)
+            if (_selectedToggle.GetComponent<RiddleOption>().answer == _usedRiddles[_currentRiddle].answer)
             {
-                
                 if (_currentRiddle >= _numberOfRiddles - 1)
                 {
                     PuzzleCompleted();
@@ -217,8 +233,22 @@ public class RiddlePuzzleManager : MonoBehaviour
         _selectedToggle = null;
     }
 
+    private void SetNodes()
+    {
+        for (int i = 0; i < _progressNodes.Length; i++)
+        {
+            bool completed = i <= _currentRiddle;
+
+            _progressNodes[i].SetLit(completed);
+
+            if (i > 0)
+                _progressLines[i - 1].SetLit(i <= _currentRiddle);
+        }
+    }
+
     public void PuzzleCompleted()
     {
+        // _timer.StopTimer(); // Make this code when you're ready
         SetToggles();
         foreach (RiddleOption option in _options)
         {
@@ -226,6 +256,8 @@ public class RiddlePuzzleManager : MonoBehaviour
         }
         _enterButton.interactable = false; // Stop Code
 
-        _radioValueDisplay.SetActive(true); // NEW
+        //_radioValueDisplay.SetActive(true); // NEW
+        _radioValueDropDown.EnableRandomImages(3);
+        _completeTimeline.Play();
     }
 }////////////////////////////

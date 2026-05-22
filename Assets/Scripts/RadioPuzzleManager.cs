@@ -12,7 +12,7 @@ public class RadioPuzzleManager : MonoBehaviour
     private RadioSlider[] _slider;
 
     [SerializeField]
-    private RadioSequence[] _sequence;
+    private ValueSlot[] _valueSlot;
 
     
     [SerializeField]
@@ -44,13 +44,14 @@ public class RadioPuzzleManager : MonoBehaviour
         }
 
         // Shuffle sequence
-        Shuffle(_sequence); // Display
+        // Shuffle(_valueSlot); // Display
 
         ///Display
         //
-        for(int i = 0; i < _sequence.Length; i++) 
+        
+        for(int i = 0; i < _valueSlot.Length; i++) 
         {
-            _sequence[i].SetValue(_slider[i]);
+            _valueSlot[i].Setup(_slider[i].name, _slider[i]._correctValue);
         }
         //
     }

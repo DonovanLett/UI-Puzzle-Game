@@ -24,12 +24,18 @@ public class PinPadPuzzleManager : MonoBehaviour
     [SerializeField]
     private RadioPuzzleManager _radioPuzzleManager;
 
-    [Header("Hello")]
+    [Header("Audio")]
     [SerializeField]
     private AudioSource _beep;
 
     [SerializeField]
+    private AudioSource _music;
+
+    [SerializeField]
     private PlayableDirector _endingTimeline, _incorrectTimeline;
+
+    [SerializeField]
+    private Timer _timer;
 
     // Start is called before the first frame update
     void Start()
@@ -88,7 +94,9 @@ public class PinPadPuzzleManager : MonoBehaviour
         {
             if (_pinPad.text == _requiredPin.ToString())
             {
+                // _timer.StopTimer(); // Make this code when you're ready
                 _endingTimeline.Play();
+                _music.Stop();
                 _pinPad.text = "PIN Accepted";
                 EventSystem.current.enabled = false; // Disables the Players ability to interact with UI
             }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Playables;
 using UnityEngine.UI;
 
 public class PuzzleManager : MonoBehaviour
@@ -18,6 +19,15 @@ public class PuzzleManager : MonoBehaviour
 
     [SerializeField]
     private GameObject _radioValueDisplay; /// NEW
+
+    [SerializeField]
+    private ValueDropDown _radioValueDropDown;
+
+    [SerializeField]
+    private PlayableDirector _completeTimeline;
+
+    [SerializeField]
+    private Timer _timer;
 
     // Start is called before the first frame update
     void Start()
@@ -61,7 +71,10 @@ public class PuzzleManager : MonoBehaviour
         }
 
         Debug.Log("Completed");
-         _radioValueDisplay.SetActive(true); // NEW
+        // _timer.StopTimer(); // Make this code when you're ready
+        _radioValueDropDown.EnableRandomImages(3);
+        _completeTimeline.Play();
+        //_radioValueDisplay.SetActive(true); // NEW
         _radioValueDisplay.transform.SetAsLastSibling();
 
         // Stop Code

@@ -4,6 +4,7 @@ using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Playables;
 using UnityEngine.UI;
 using UnityEngine.Windows;
 
@@ -24,12 +25,20 @@ public class EncryptionPuzzleManager : MonoBehaviour
     [SerializeField]
     private GameObject _radioValueDisplay; /// NEW
 
+    [SerializeField]
+    private ValueDropDown _radioValueDropDown;
+
+    [SerializeField]
+    private PlayableDirector _completeTimeline;
+
+    [SerializeField]
+    private Timer _timer;
+
     // Start is called before the first frame update
     void Start()
     {
         _decryptedAnswer = _possibleStrings[Random.Range(0, _possibleStrings.Length)];
         _encryptedAnswer = AtbashCipher(_decryptedAnswer);
-
         _encryptedTextBox.text = _encryptedAnswer;
     }
 
@@ -70,9 +79,12 @@ public class EncryptionPuzzleManager : MonoBehaviour
         if (_decryptedTextBox.text == _decryptedAnswer)
         {
             Debug.Log("Correct");
+            // _timer.StopTimer(); // Make this code when you're ready
             _decryptedTextBox.readOnly = true; 
             _enterButton.interactable = false;
-            _radioValueDisplay.SetActive(true);
+            _radioValueDropDown.EnableRandomImages(3);
+            //_radioValueDisplay.SetActive(true);
+            _completeTimeline.Play();
         }
         else
         {
