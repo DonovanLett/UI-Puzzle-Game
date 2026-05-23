@@ -7,7 +7,9 @@ public class Timer : MonoBehaviour
     [Header("Timer State")]
     [SerializeField] private bool startOnAwake = false;
 
+    [SerializeField]
     private float elapsedTime;
+    [SerializeField]
     private bool isRunning;
 
     // Read-only properties
@@ -48,11 +50,13 @@ public class Timer : MonoBehaviour
 
     public void StartTimer()
     {
+        Debug.Log(name + " timer started.");
         isRunning = true;
     }
 
     public void StopTimer()
     {
+        Debug.Log(name + " timer stopped at " + elapsedTime);
         isRunning = false;
         _connectedStatsManager.AddTimeValue(this);
     }

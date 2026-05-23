@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class StatsManager : MonoBehaviour
 {
@@ -14,21 +15,29 @@ public class StatsManager : MonoBehaviour
     [SerializeField]
     private GameObject _timeTextPrefab;
 
+    [SerializeField]
+    private string _saveString;
+
     private void Start()
     {
+       // Debug.Log(PlayerPrefs.GetString("SAVE_TIMES")); 
         Load();
     }
 
     public void AddTimeValue(Timer timer)
     {
+        Debug.Log("New value added to " + name + ": " + timer.ElapsedTime);
         _times.Add(timer.ElapsedTime);
         _times.Sort();
         string text = FormatTime(timer.Hours, timer.Minutes, timer.Seconds);
-        GameObject newText = Instantiate(_timeTextPrefab, transform.position, Quaternion.identity);
-        newText.transform.SetParent(this.GetComponent<RectTransform>(), true);
+        GameObject newText = Instantiate(_timeTextPrefab, transform.position, Quaternion.identity, this.GetComponent<RectTransform>());
+        // newText.transform.SetParent(this.GetComponent<RectTransform>(), true);
         newText.GetComponent<TMP_Text>().text = text;
         newText.transform.SetSiblingIndex(_times.IndexOf(timer.ElapsedTime));
-        _timeTexts.Add(newText);
+        //Debug.Log("Time Index: " + _times.IndexOf(timer.ElapsedTime)); // Delete Eventually
+        //Debug.Log("Text Index: " + newText.transform.GetSiblingIndex()); // Delete Eventually
+        _timeTexts.Insert(_times.IndexOf(timer.ElapsedTime), newText);
+        //_timeTexts.Add(newText); // This has to be sorted as well
         Save();
     }
 
@@ -46,16 +55,27 @@ public class StatsManager : MonoBehaviour
 
         string json = JsonUtility.ToJson(data);
 
-        PlayerPrefs.SetString("SAVE_TIMES", json);
+        PlayerPrefs.SetString(_saveString, json); // PlayerPrefs.SetString("SAVE_TIMES", json);
         PlayerPrefs.Save();
     }
 
     public void Load()
     {
-        if (!PlayerPrefs.HasKey("SAVE_TIMES"))
+        /// Clearing old text
+        //
+        foreach (GameObject obj in _timeTexts)
+        {
+            Destroy(obj);
+        }
+
+        _timeTexts.Clear();
+        //
+
+
+        if (!PlayerPrefs.HasKey(_saveString))
             return;
 
-        string json = PlayerPrefs.GetString("SAVE_TIMES");
+        string json = PlayerPrefs.GetString(_saveString);
 
         StatData data = JsonUtility.FromJson<StatData>(json);
 
@@ -65,7 +85,7 @@ public class StatsManager : MonoBehaviour
 
         foreach (string text in data.textValues)
         {
-            GameObject obj = Instantiate(_timeTextPrefab);
+            GameObject obj = Instantiate(_timeTextPrefab, this.GetComponent<RectTransform>()); // originally GameObject obj = Instantiate(_timeTextPrefab);
             obj.GetComponent<TMPro.TMP_Text>().text = text;
 
             _timeTexts.Add(obj);

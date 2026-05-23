@@ -79,8 +79,8 @@ public class EncryptionPuzzleManager : MonoBehaviour
         if (_decryptedTextBox.text == _decryptedAnswer)
         {
             Debug.Log("Correct");
-            // _timer.StopTimer(); // Make this code when you're ready
-            _decryptedTextBox.readOnly = true; 
+            _timer.StopTimer(); // Make this code when you're ready
+            _decryptedTextBox.readOnly = true;
             _enterButton.interactable = false;
             _radioValueDropDown.EnableRandomImages(3);
             //_radioValueDisplay.SetActive(true);

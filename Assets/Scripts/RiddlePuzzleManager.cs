@@ -248,7 +248,7 @@ public class RiddlePuzzleManager : MonoBehaviour
 
     public void PuzzleCompleted()
     {
-        // _timer.StopTimer(); // Make this code when you're ready
+        _timer.StopTimer(); // Make this code when you're ready
         SetToggles();
         foreach (RiddleOption option in _options)
         {

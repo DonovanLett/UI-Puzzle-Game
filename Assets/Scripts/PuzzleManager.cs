@@ -71,7 +71,7 @@ public class PuzzleManager : MonoBehaviour
         }
 
         Debug.Log("Completed");
-        // _timer.StopTimer(); // Make this code when you're ready
+        _timer.StopTimer(); // Make this code when you're ready
         _radioValueDropDown.EnableRandomImages(3);
         _completeTimeline.Play();
         //_radioValueDisplay.SetActive(true); // NEW
