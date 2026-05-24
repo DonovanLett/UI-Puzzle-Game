@@ -26,7 +26,7 @@ public class Timer : MonoBehaviour
     public float ElapsedTime => elapsedTime;
 
     [SerializeField]
-    private StatsManager _connectedStatsManager;
+    private StatsManager[] _connectedStatsManager;
 
     private void Start()
     {
@@ -34,7 +34,6 @@ public class Timer : MonoBehaviour
         {
             StartTimer();
         }
-
         //UpdateVisuals();
     }
 
@@ -58,7 +57,11 @@ public class Timer : MonoBehaviour
     {
         Debug.Log(name + " timer stopped at " + elapsedTime);
         isRunning = false;
-        _connectedStatsManager.AddTimeValue(this);
+        foreach(StatsManager s in _connectedStatsManager)
+        {
+            s.AddTimeValue(this);
+        }
+       // _connectedStatsManager.AddTimeValue(this);
     }
 
     public void ResetTimer()

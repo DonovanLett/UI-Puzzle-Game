@@ -141,8 +141,38 @@ public class RadioPuzzleManager : MonoBehaviour
     }
 
 
-
     private void OnApplicationQuit()
+    {
+        var timeline = director.playableAsset as TimelineAsset;
+
+        // Find an existing AudioTrack (recommended)
+        AudioTrack audioTrack = null;
+
+        foreach (var track in timeline.GetOutputTracks())
+        {
+            if (track is AudioTrack at)
+            {
+                audioTrack = at;
+                break;
+            }
+        }
+
+        if (audioTrack == null)
+        {
+            Debug.LogError("No AudioTrack found in Timeline!");
+            return;
+        }
+
+        // Clear Number Sequence Timeline
+        // Option 1: Delete each clip
+        foreach (var clip in audioTrack.GetClips())
+        {
+            audioTrack.DeleteClip(clip);
+        }
+        director.RebuildGraph(); // Maybe essential, maybe not
+    }
+
+    public void WipeTimeline()
     {
         var timeline = director.playableAsset as TimelineAsset;
 

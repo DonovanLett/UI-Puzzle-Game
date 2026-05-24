@@ -14,7 +14,7 @@ public class UmbrellaStatsManager : MonoBehaviour
         {
            manager.Load();
         }
-       // PlayerPrefs.DeleteAll();
+        // PlayerPrefs.DeleteAll();
     }
 
     // Update is called once per frame

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -6,11 +7,38 @@ using static UnityEngine.GraphicsBuffer;
 
 public class StatsManager : MonoBehaviour
 {
+    private enum ManagerType
+    {
+        Chronological,
+        Sorted,
+    }
+
+    [SerializeField]
+    private ManagerType _type;
+
     [SerializeField]
     private List<float> _times;
 
     [SerializeField]
     private List<GameObject> _timeTexts;
+
+    /*
+    /// Newest to oldest
+    //
+    [Header("Newest to Oldest")]
+    [SerializeField]
+    private List<float> _newestTimes;
+
+    [SerializeField]
+    private List<GameObject> _newestTimeTexts;
+
+    [SerializeField]
+    private GameObject _newestSpace;
+
+    [SerializeField]
+    private string _newestSaveString;
+    //
+    */
 
     [SerializeField]
     private GameObject _timeTextPrefab;
@@ -26,18 +54,94 @@ public class StatsManager : MonoBehaviour
 
     public void AddTimeValue(Timer timer)
     {
+        if (_type == ManagerType.Sorted)
+        {
+            Debug.Log("New value added to " + name + ": " + timer.ElapsedTime);
+           // _times.Insert(0, timer.ElapsedTime);
+            _times.Add(timer.ElapsedTime);
+            _times.Sort();
+            string text = FormatTime(timer.Hours, timer.Minutes, timer.Seconds);
+
+            DateTime currentTime = DateTime.Now;
+            // text += " - " + currentTime.ToString("MM/dd/yyyy - hh:mm tt"); // originally "MMMM dd, yyyy - hh:mm tt"
+            text += " - " + currentTime.ToString("hh:mm tt (MM/dd/yy)");
+
+
+            GameObject newText = Instantiate(_timeTextPrefab, transform.position, Quaternion.identity, this.GetComponent<RectTransform>()); /// This will need to be fixed
+            newText.GetComponent<TMP_Text>().text = text;
+            newText.transform.SetSiblingIndex(_times.IndexOf(timer.ElapsedTime));
+            _timeTexts.Insert(_times.IndexOf(timer.ElapsedTime), newText);
+            Save();
+        }
+        else if(_type == ManagerType.Chronological)
+        {
+            _times.Insert(0, timer.ElapsedTime);
+            //_times.Add(timer.ElapsedTime);
+            string text = FormatTime(timer.Hours, timer.Minutes, timer.Seconds);
+
+            DateTime currentTime = DateTime.Now;
+            // text += " - " + currentTime.ToString("MM/dd/yyyy - hh:mm tt"); // originally "MMMM dd, yyyy - hh:mm tt"
+            text += " - " + currentTime.ToString("hh:mm tt (MM/dd/yy)");
+
+
+            GameObject newText = Instantiate(_timeTextPrefab, transform.position, Quaternion.identity, this.GetComponent<RectTransform>());
+            newText.GetComponent<TMP_Text>().text = text;
+            newText.transform.SetSiblingIndex(_times.IndexOf(timer.ElapsedTime));
+            _timeTexts.Insert(_times.IndexOf(timer.ElapsedTime), newText);
+            Save();
+        }
+    }
+
+    public void AddTimeValueOld(Timer timer)
+    {
         Debug.Log("New value added to " + name + ": " + timer.ElapsedTime);
         _times.Add(timer.ElapsedTime);
         _times.Sort();
         string text = FormatTime(timer.Hours, timer.Minutes, timer.Seconds);
-        GameObject newText = Instantiate(_timeTextPrefab, transform.position, Quaternion.identity, this.GetComponent<RectTransform>());
-        // newText.transform.SetParent(this.GetComponent<RectTransform>(), true);
+
+        DateTime currentTime = DateTime.Now;
+        // text += " - " + currentTime.ToString("MM/dd/yyyy - hh:mm tt"); // originally "MMMM dd, yyyy - hh:mm tt"
+        text += " - " + currentTime.ToString("hh:mm tt (MM/dd/yy)");
+
+
+        GameObject newText = Instantiate(_timeTextPrefab, transform.position, Quaternion.identity, this.GetComponent<RectTransform>()); /// This will need to be fixed
         newText.GetComponent<TMP_Text>().text = text;
         newText.transform.SetSiblingIndex(_times.IndexOf(timer.ElapsedTime));
-        //Debug.Log("Time Index: " + _times.IndexOf(timer.ElapsedTime)); // Delete Eventually
-        //Debug.Log("Text Index: " + newText.transform.GetSiblingIndex()); // Delete Eventually
         _timeTexts.Insert(_times.IndexOf(timer.ElapsedTime), newText);
-        //_timeTexts.Add(newText); // This has to be sorted as well
+        Save();
+    }
+
+    public void AddChronologically(Timer timer) // Maybe use later
+    {
+        _times.Add(timer.ElapsedTime);
+        string text = FormatTime(timer.Hours, timer.Minutes, timer.Seconds);
+
+        DateTime currentTime = DateTime.Now;
+        // text += " - " + currentTime.ToString("MM/dd/yyyy - hh:mm tt"); // originally "MMMM dd, yyyy - hh:mm tt"
+        text += " - " + currentTime.ToString("hh:mm tt (MM/dd/yy)");
+
+
+        GameObject newText = Instantiate(_timeTextPrefab, transform.position, Quaternion.identity, this.GetComponent<RectTransform>());
+        newText.GetComponent<TMP_Text>().text = text;
+        newText.transform.SetSiblingIndex(_times.IndexOf(timer.ElapsedTime));
+        _timeTexts.Insert(_times.IndexOf(timer.ElapsedTime), newText);
+        Save();
+    }
+
+    public void AddQuickestToSlowest(Timer timer) // Maybe use later
+    {
+        _times.Add(timer.ElapsedTime);
+        _times.Sort();
+        string text = FormatTime(timer.Hours, timer.Minutes, timer.Seconds);
+
+        DateTime currentTime = DateTime.Now;
+        // text += " - " + currentTime.ToString("MM/dd/yyyy - hh:mm tt"); // originally "MMMM dd, yyyy - hh:mm tt"
+        text += " - " + currentTime.ToString("hh:mm tt (MM/dd/yy)");
+
+        GameObject newText = Instantiate(_timeTextPrefab, transform.position, Quaternion.identity, this.GetComponent<RectTransform>());
+        newText.GetComponent<TMP_Text>().text = text;
+        newText.transform.SetSiblingIndex(_times.IndexOf(timer.ElapsedTime));
+        _timeTexts.Insert(_times.IndexOf(timer.ElapsedTime), newText);
         Save();
     }
 
@@ -58,6 +162,30 @@ public class StatsManager : MonoBehaviour
         PlayerPrefs.SetString(_saveString, json); // PlayerPrefs.SetString("SAVE_TIMES", json);
         PlayerPrefs.Save();
     }
+
+    
+    /*
+    /// Newest to oldest
+    /// 
+    public void Save(List<float> times, List<GameObject> timeTexts, string saveString)
+    {
+        StatData data = new StatData();
+
+        data.times = times;
+
+        // Instead of saving GameObjects, save what they represent
+        foreach (GameObject obj in timeTexts)
+        {
+            data.textValues.Add(obj.GetComponent<TMPro.TMP_Text>().text);
+        }
+
+        string json = JsonUtility.ToJson(data);
+
+        PlayerPrefs.SetString(saveString, json); // PlayerPrefs.SetString("SAVE_TIMES", json);
+        PlayerPrefs.Save();
+    }
+    //
+    */
 
     public void Load()
     {
@@ -91,6 +219,45 @@ public class StatsManager : MonoBehaviour
             _timeTexts.Add(obj);
         }
     }
+
+
+    /*
+    /// Newest to oldest
+    ///
+    public void Load(List<float> times, List<GameObject> timeTexts, string saveString)
+    {
+        /// Clearing old text
+        //
+        foreach (GameObject obj in _timeTexts)
+        {
+            Destroy(obj);
+        }
+
+        _timeTexts.Clear();
+        //
+
+
+        if (!PlayerPrefs.HasKey(saveString))
+            return;
+
+        string json = PlayerPrefs.GetString(saveString);
+
+        StatData data = JsonUtility.FromJson<StatData>(json);
+
+        _times = data.times;
+
+        _timeTexts = new List<GameObject>();
+
+        foreach (string text in data.textValues)
+        {
+            GameObject obj = Instantiate(_timeTextPrefab, this.GetComponent<RectTransform>()); // originally GameObject obj = Instantiate(_timeTextPrefab);
+            obj.GetComponent<TMPro.TMP_Text>().text = text;
+
+            _timeTexts.Add(obj);
+        }
+    }
+    /// 
+    */
 
     public string FormatTime(float hours, float minutes, float seconds)
     {

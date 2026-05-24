@@ -95,6 +95,7 @@ public class PinPadPuzzleManager : MonoBehaviour
             if (_pinPad.text == _requiredPin.ToString())
             {
                 _timer.StopTimer(); // Make this code when you're ready
+                _radioPuzzleManager.WipeTimeline(); // Maybe instead call this right before the radio is filled. !!!!!!!!!
                 _endingTimeline.Play();
                 _music.Stop();
                 _pinPad.text = "PIN Accepted";
