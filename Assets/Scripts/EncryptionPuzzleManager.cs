@@ -34,12 +34,29 @@ public class EncryptionPuzzleManager : MonoBehaviour
     [SerializeField]
     private Timer _timer;
 
+    [Header("On-Screen Cipher")]
+    [SerializeField]
+    private CircularTextLayout _cipherCircle;
+
+    [SerializeField]
+    private int _shiftAmount;
+
     // Start is called before the first frame update
     void Start()
     {
+        _shiftAmount = UnityEngine.Random.Range(1, 26);
+
         _decryptedAnswer = _possibleStrings[Random.Range(0, _possibleStrings.Length)];
-        _encryptedAnswer = AtbashCipher(_decryptedAnswer);
+        // _encryptedAnswer = AtbashCipher(_decryptedAnswer);
+        _encryptedAnswer = Encrypt(_decryptedAnswer, _shiftAmount);
         _encryptedTextBox.text = _encryptedAnswer;
+
+        // Circle Cipher Code
+        foreach(var letter in _cipherCircle.letters)
+        {
+            // letter.text = AtbashCipher(letter.text);
+            letter.text = Encrypt(letter.text, _shiftAmount);
+        }
     }
 
     private string AtbashCipher(string input)
@@ -65,6 +82,48 @@ public class EncryptionPuzzleManager : MonoBehaviour
             else
             {
                 // Keep non-letters unchanged (spaces, punctuation, etc.)
+                result.Append(c);
+            }
+        }
+
+        return result.ToString();
+    }
+
+    private string Encrypt(string input, int shift)
+    {
+        shift %= 26;
+
+        StringBuilder result = new StringBuilder();
+
+        foreach (char c in input)
+        {
+            // Uppercase letters
+            if (c >= 'A' && c <= 'Z')
+            {
+                int index = c - 'A';
+
+                int shifted = (index + shift) % 26;
+
+                char encrypted = (char)('A' + shifted);
+
+                result.Append(encrypted);
+            }
+
+            // Lowercase letters
+            else if (c >= 'a' && c <= 'z')
+            {
+                int index = c - 'a';
+
+                int shifted = (index + shift) % 26;
+
+                char encrypted = (char)('a' + shifted);
+
+                result.Append(encrypted);
+            }
+
+            // Non-letters
+            else
+            {
                 result.Append(c);
             }
         }
