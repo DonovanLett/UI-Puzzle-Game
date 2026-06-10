@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.Playables; // Number Sequence Code
 using UnityEngine.Timeline; // Number Sequence Code
 
-public class RadioPuzzleManager : MonoBehaviour
+public class RadioPuzzleManager : MonoBehaviour, IResetScript
 {
     [SerializeField]
     private RadioSlider[] _slider;
@@ -14,7 +14,6 @@ public class RadioPuzzleManager : MonoBehaviour
     [SerializeField]
     private ValueSlot[] _valueSlot;
 
-    
     [SerializeField]
     private float _overallMessageClarity; // Change this variable to say the opposite of what it says right now; the higher it is, the lower the sound of static
 
@@ -50,6 +49,26 @@ public class RadioPuzzleManager : MonoBehaviour
         //
         
         for(int i = 0; i < _valueSlot.Length; i++) 
+        {
+            _valueSlot[i].Setup(_slider[i].name, _slider[i]._correctValue);
+        }
+        //
+    }
+
+    public void Reset()
+    {
+        // Reset all sliders to 0
+
+        foreach (var slider in _slider)
+        {
+            if(slider.GetComponent<Slider>() != null)
+            {
+                slider.GetComponent<Slider>().value = 0f;
+            }
+            slider.SetValue();
+        }
+
+        for (int i = 0; i < _valueSlot.Length; i++)
         {
             _valueSlot[i].Setup(_slider[i].name, _slider[i]._correctValue);
         }

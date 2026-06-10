@@ -7,7 +7,7 @@ using UnityEngine.Playables;
 using UnityEngine.UI;
 using UnityEngine.Windows;
 
-public class PinPadPuzzleManager : MonoBehaviour
+public class PinPadPuzzleManager : MonoBehaviour, IResetScript
 {
     [SerializeField]
     private TMP_Text _pinPad;
@@ -42,6 +42,14 @@ public class PinPadPuzzleManager : MonoBehaviour
     {
         RandomizePin();
         _beep = GetComponent<AudioSource>();
+        _pinPad.text = "Enter PIN";
+        _pinBeingAdded = false;
+    }
+
+    public void Reset()
+    {
+        RandomizePin();
+        _beep = GetComponent<AudioSource>(); // Maybe not necessary
         _pinPad.text = "Enter PIN";
         _pinBeingAdded = false;
     }

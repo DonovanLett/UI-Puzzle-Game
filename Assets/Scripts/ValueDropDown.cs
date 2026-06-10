@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ValueDropDown : MonoBehaviour
+public class ValueDropDown : MonoBehaviour, IResetScript
 {
     [SerializeField]
     private Button _dropDownButton;
@@ -21,6 +21,12 @@ public class ValueDropDown : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
+    {
+        RiseUp();
+        ResetImages();
+    }
+
+    public void Reset()
     {
         RiseUp();
         ResetImages();
@@ -67,12 +73,6 @@ public class ValueDropDown : MonoBehaviour
             remainingImages.Add(image);
         }
     }
-
-
-
-
-
-
 
     void Shuffle<T>(List<T> list)
     {

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Timer : MonoBehaviour
+public class Timer : MonoBehaviour, IResetScript
 {
     [Header("Timer State")]
     [SerializeField] private bool startOnAwake = false;
@@ -64,18 +64,20 @@ public class Timer : MonoBehaviour
        // _connectedStatsManager.AddTimeValue(this);
     }
 
-    public void ResetTimer()
+    public void Reset() // Originally public void ResetTimer()
     {
         elapsedTime = 0f;
 
         //UpdateVisuals();
     }
 
+    /*
     public void ResetAndStopTimer()
     {
         StopTimer();
         ResetTimer();
     }
+    */
 
 
     /*

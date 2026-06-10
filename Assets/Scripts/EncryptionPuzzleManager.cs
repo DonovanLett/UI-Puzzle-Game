@@ -8,7 +8,7 @@ using UnityEngine.Playables;
 using UnityEngine.UI;
 using UnityEngine.Windows;
 
-public class EncryptionPuzzleManager : MonoBehaviour
+public class EncryptionPuzzleManager : MonoBehaviour, IResetScript
 {
     [SerializeField]
     private string _decryptedAnswer, _encryptedAnswer;
@@ -34,6 +34,9 @@ public class EncryptionPuzzleManager : MonoBehaviour
     [SerializeField]
     private Timer _timer;
 
+    [SerializeField]
+    private Button _returnButton;
+
     [Header("On-Screen Cipher")]
     [SerializeField]
     private CircularTextLayout _cipherCircle;
@@ -47,16 +50,35 @@ public class EncryptionPuzzleManager : MonoBehaviour
         _shiftAmount = UnityEngine.Random.Range(1, 26);
 
         _decryptedAnswer = _possibleStrings[Random.Range(0, _possibleStrings.Length)];
-        // _encryptedAnswer = AtbashCipher(_decryptedAnswer);
-        _encryptedAnswer = Encrypt(_decryptedAnswer, _shiftAmount);
+        _encryptedAnswer = AtbashCipher(_decryptedAnswer);
+        // _encryptedAnswer = Encrypt(_decryptedAnswer, _shiftAmount);
         _encryptedTextBox.text = _encryptedAnswer;
 
         // Circle Cipher Code
         foreach(var letter in _cipherCircle.letters)
         {
-            // letter.text = AtbashCipher(letter.text);
-            letter.text = Encrypt(letter.text, _shiftAmount);
+            letter.text = AtbashCipher(letter.text);
+            // letter.text = Encrypt(letter.text, _shiftAmount);
         }
+    }
+
+    public void Reset()
+    {
+        _decryptedAnswer = _possibleStrings[Random.Range(0, _possibleStrings.Length)];
+        _encryptedAnswer = AtbashCipher(_decryptedAnswer);
+        // _encryptedAnswer = Encrypt(_decryptedAnswer, _shiftAmount);
+        _decryptedTextBox.text = "";
+        _encryptedTextBox.text = _encryptedAnswer;
+
+        // Circle Cipher Code
+        foreach (var letter in _cipherCircle.letters)
+        {
+            letter.text = AtbashCipher(letter.text);
+            // letter.text = Encrypt(letter.text, _shiftAmount);
+        }
+        _decryptedTextBox.readOnly = false;
+        _enterButton.interactable = true;
+        _returnButton.gameObject.SetActive(false);
     }
 
     private string AtbashCipher(string input)

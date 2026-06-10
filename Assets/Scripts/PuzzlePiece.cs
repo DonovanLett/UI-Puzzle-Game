@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -8,7 +9,7 @@ using UnityEngine.UI;
 using static Unity.VisualScripting.Member;
 using static UnityEngine.GraphicsBuffer;
 
-public class PuzzlePiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
+public class PuzzlePiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler, IResetScript
 {
     private Image _image;
 
@@ -32,12 +33,41 @@ public class PuzzlePiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
     [SerializeField]
     private RectTransform _holderSheet, _challengeSpace;
 
+    /*
     // Start is called before the first frame update
     void Start()
     {
         _image = GetComponent<Image>();
         _rectTransform = GetComponent<RectTransform>();
-        _holderSheet = transform.parent.GetComponent<RectTransform>(); ;
+        _holderSheet = transform.parent.GetComponent<RectTransform>();
+    }
+    */
+
+    public void OnRoundStart()
+    {
+        _image = GetComponent<Image>();
+        _rectTransform = GetComponent<RectTransform>();
+        _holderSheet = transform.parent.GetComponent<RectTransform>();
+    }
+
+    public void Reset()
+    {
+        if (_currentSlot != null)
+        {
+            _currentSlot.OnPuzzlePieceRemoved();
+            _currentSlot = null;
+            if (_isCorrect == true)
+            {
+                _isCorrect = false;
+            }
+        }
+        ResetPosition();
+
+        /*
+        transform.SetParent(_holderSheet.transform, false);
+        _currentSlot = null;
+        _isCorrect = false;
+        */
     }
 
     // Update is called once per frame
@@ -56,7 +86,6 @@ public class PuzzlePiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
         {
             _currentSlot.OnPuzzlePieceRemoved();
             _currentSlot = null;
-
             if(_isCorrect == true)
             {
                 _isCorrect = false;
@@ -88,7 +117,6 @@ public class PuzzlePiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
 
         _rectTransform.anchoredPosition = localPoint;
     }
-
 
     public void OnEndDrag(PointerEventData eventData)
     {

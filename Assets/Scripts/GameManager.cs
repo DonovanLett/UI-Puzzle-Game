@@ -14,11 +14,17 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private PlayableDirector _openingCutscene;
 
-    [SerializeField] 
+    [SerializeField]
+    private PlayableDirector _replayNarrationCutscene;
+
+    [SerializeField]
     private EventSystem _eventSystem;
 
     [SerializeField]
     private bool _isOnOpeningText;
+
+    [SerializeField]
+    private GameObject[] _scriptsToReset;
 
     private void Update()
     {
@@ -77,7 +83,20 @@ public class GameManager : MonoBehaviour
 
     public void Replay()
     {
+        foreach(var obj in _scriptsToReset) // originally foreach(var script in _scriptsToReset)
+        {
+            IResetScript script = obj.GetComponent<IResetScript>();
+            if(script != null)
+            {
+                script.Reset();
+            }
 
+
+            //script.Reset();
+        }
+
+        _replayNarrationCutscene.Play();
+        Debug.Log("Replay Cutscene Should be Triggered");
     }
 
     public void OpeningTextSkippable()

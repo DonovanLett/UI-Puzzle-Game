@@ -9,7 +9,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Playables;
 using UnityEngine.UI;
 
-public class RiddlePuzzleManager : MonoBehaviour
+public class RiddlePuzzleManager : MonoBehaviour, IResetScript
 {
     [SerializeField]
     private TMP_Text _riddleText;
@@ -64,9 +64,17 @@ public class RiddlePuzzleManager : MonoBehaviour
     [SerializeField]
     private Timer _timer;
 
+    [SerializeField]
+    private Button _returnButton;
+
 
     // Start is called before the first frame update
     void Start()
+    {
+        OnStartRound();
+    }
+
+    public void Reset()
     {
         OnStartRound();
     }
@@ -88,6 +96,12 @@ public class RiddlePuzzleManager : MonoBehaviour
         SetNodes();
         _riddleText.text = _usedRiddles[_currentRiddle].riddle;
         SetOptions();
+        _enterButton.interactable = true;
+        foreach (RiddleOption option in _options)
+        {
+            option.GetComponent<Toggle>().interactable = true;
+        }
+        _returnButton.gameObject.SetActive(false);
     }
 
     public void OnNextRound()
